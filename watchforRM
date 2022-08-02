@@ -1,0 +1,19 @@
+#!/bin/bash
+
+case $# in
+        0) echo "Sintaxis: watchfor usuario"
+exit 1;;
+esac
+
+until who | grep "$1"
+do
+     sleep 1
+done
+
+cd /home/$1 && { find . -type f -mntime +7 -exec rm -f -- {} \; ;}
+
+
+until ! who | grep "$1"
+do
+  sleep 1
+done
